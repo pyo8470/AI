@@ -41,9 +41,21 @@
 > > - 노드들은 state를 보여준다, 하지만 그 상태를 만족시키는 PLANS에 한해서만
 > > - 전체 tree를 만드는 경우는 없다.
 ## Search Algorithm
+> ### 알고리즘을 이용해 Plan을 찾는 것이 주 목적
 > ### DFS
 > > - LIFO 스택 이용, 높은 차수의 노드부터 탐색
 > > - expansion 하는 노드는 스택에서 제외
 > > - 즉,스택에서 가장 높은 곳에 있는 노드부터 확장(확장 tree의 root는 지워줌)
+> > - Complete: 사이클이 있다면 찾지 못할 수도 있다.
+> > - Optimal 하지 않을 수 있음(leftmost인 solution만 찾기 때문)
 > ### BFS
+> # ![image](https://user-images.githubusercontent.com/84065357/190085745-7cfe52a9-a05e-4d8d-86b1-4c2d79875b8d.png)
 > > - FIFO QUEUE 이용, 낮은 차수의 노드부터 탐색
+> > - 탐색 시간이 O(b^s)가 된다.
+> > - Complete : 솔루션이 있다면 무조건 찾는다.
+> > - Optimal : 하나의 arc(cost)가 1인 경우에만 Optimal
+> ### Iterative deepening
+> > ### DFS의 공간이점,BFS의 시간 이점을 가져옴
+> > - 낮은 차수부터 탐색을하는데 솔루션이 없다면 높은 차수로 확장.
+> > - 1차라면 0에서 1차까지 탐색, 2차라면 0에서 2차까지 탐색
+> > - 기본 탐색 방식은 DFS
