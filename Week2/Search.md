@@ -59,3 +59,12 @@
 > > - 낮은 차수부터 탐색을하는데 솔루션이 없다면 높은 차수로 확장.
 > > - 1차라면 0에서 1차까지 탐색, 2차라면 0에서 2차까지 탐색
 > > - 기본 탐색 방식은 DFS
+> ### Cost-Sensitive Search
+> > ### 전체 Cost의 합을 최우선으로 여긴다.
+> > - 가장 Cheapest한 솔루션보다 cost가 적은 노드로 확장
+> > # ![image](https://user-images.githubusercontent.com/84065357/190971892-350d5704-e50a-40bf-bbe1-08fec83f624d.png)
+> > > - solution cost 가C\*이고, arcs의 cost가 최소 e -> 효율적인 depth = C\*/e
+> > > - 시간 복잡도 = O(b^C\*/e)
+> > ### Optimal 하다
+> > - 제일 좋은것을 찾기는 하나 탐색시간이 더 걸린다.
+> > # ![image](https://user-images.githubusercontent.com/84065357/190972517-f25ba944-3ede-4fd6-ba3e-8cd8ad74ca1e.png)
