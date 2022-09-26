@@ -65,7 +65,7 @@
 > > # ![image](https://user-images.githubusercontent.com/84065357/192201132-f8768e2d-671c-4ae6-bc0e-617755c15780.png)
 > ## Minimax의 효율성
 > > - DFS(전부 다보는)
-> > - time : O(b^m) Space : O(bm)
+> > - time : $O(b^{m})$ Space : $O(bm)$
 > > ### 체스에 관해 b=35 m=100
 > > > - 전체 트리를 돌려면 계산이 현실적으로 불가능함
 > ## Minimax Pruning(가지치기)
@@ -83,4 +83,27 @@
 > ### MAX에 대해서도 그냥 서로 값만 바꾸면 가능.
 > # ![image](https://user-images.githubusercontent.com/84065357/192202454-d4e6a01c-94b5-447e-9097-7e1384c5d158.png)
 > ## 특징
-> > 
+> > - ### root로부터 계산된 minimax값에 대해 가지치기가 영향을 주지 않음
+> > - ### 중간 노드의 값이 틀릴 수도 있다
+> > > - root의 자식노드가 틀린 값을 가지고 있을 수 있다.
+> > > - 잘못된 값을 기준으로 잘라낼 수 있다(Optimal Search가 안될 수 있다)
+> > > - 상대방이 Perfect하다고 가정하기 떄문에, Replanning(상황이 진행될 때마다 다시 Tree 구성)할 수 있다
+> > - ### 좋은 자식노드 정렬은 가지치기의 효과를 높인다
+> > > - 불필요한 노드 접근을 줄일 수 있다.
+> > - ### 완벽한 정렬 하에서
+> > > - 시간 복잡도가 $O(b^{m/2}))$
+> ### Metareasoning(무엇을 계산할지 계산하는것)의 간단한 예이다
+
+## Resource Limits
+> ### 문제 : 현실의 게임에서, leaf 노드들을 전부 찾을 수 없다
+> ### Solution : 깊이-제한 탐색
+> > - Tree에서 제한된 깊이만큼만 탐색한다
+> > - Terminal utilities를 Terminal이 아닌 위치에 대한 Evalutaion Function으로 교체
+> ### 예시 
+> > - 100초를 쓸 수 있고, 초당 10K의 노드를 탐색 가능하다고 가정
+> > - 하나의 움직임당 1M개의 노드를 check 가능
+> > - A-B는 깊이 8정도에 도달함(체스 프로그램에서) 
+> ### Optimal play 보장은 없다
+
+## Evaluation Function
+> 
