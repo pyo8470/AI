@@ -1,10 +1,5 @@
-# user_color=input(f'Type "WHITE" or "BLACK": ')
-# Turn=int(input(f'WHITE first (1) BLACK first (2): '))
 import string
 import sys
-
-
-BoardSize = 3 
 blackPawn = " \u265f  "
 whitePawn = " \u2658  "
 empty_square = "    "
@@ -31,12 +26,14 @@ def Hexapawn_game(State,User_color,computer_color,Turn):
             if User_color==whitePawn:
                 State=get_move_human(State,User_color)
             elif user_color == blackPawn:
-                AI_move()
+                State = computer.AI_move(State)
+            Turn = 2
         elif Turn == 2 : ### 검은색 턴
             if User_color==blackPawn:
                 State=get_move_human(State,User_color)
             elif user_color == whitePawn:
-                AI_move()
+                State = computer.AI_move(State)
+            Turn = 1
 
 
 ###  Read the input text file to make a state
@@ -44,7 +41,7 @@ def read_file(filename):
     f=open(filename,'r')
     strState=f.readlines()
     # 파일의 공백 제거
-    for i in range(BoardSize):
+    for i in range(3):
         strState[i]=strState[i].replace(" ","")
         strState[i]=strState[i].replace("\n","")
     return strState
@@ -162,10 +159,39 @@ def get_move_human(State,User_color):
         State[row][col] = empty_square # Pawn을 옮겼으니 빈칸으로 채워준다.
         return State
 
-def AI_move():
+def value(State):
+def max_value(State):
+def min_value(State):
+## AI
+def AI_move(State,computer_color):
+    row_col=get_computer_pawn(State,computer_color)
+    print(row_col)
+    print(len(row_col))
+    valid_moves=is_valid_move_AI(State,row_col)
     return
-def minimax():
+def is_valid_move_AI(State,row_col):
+    row=[];col=[]
+    vaild_move=[]
+    for i in range(len(row_col)):
+        a,b=row_col[i]
+        row.append(a); col.append(b)
+    print(row,col)
+    for r,c in row,col :
+        my_pawn = State[r][c]
+        opposite_pawn = get_opposite_Color(my_pawn)
+        direction = get_direction(my_pawn) 
     return
+def get_computer_pawn(State,computer_color):
+    row_and_column=[]
+    for i in range(3):
+        for j in range(3):
+            if State[i][j] == computer_color:
+                (row,col) = (i,j)
+                row_and_column.append((row,col))
+    return row_and_column
+def minimax(State):
+    return
+
 
 ## 게임 종료 
 ## 1. 말이 상대편의 보드에 닿았는가
@@ -202,6 +228,9 @@ def gameover(State):
         print("WHITE PAWN ALL DEAD!")
         print("BLACk WIN!!!!!!!!!!!!!!!!")
         return 1
+    elif count_White_pawn == 0 and count_Black_pawn == 0 :
+        DrawBoard(State)
+        print("DRAW!!!!!!!!!!!!!!!!")
     ## 행동 불가
     ## 모든 Pawn에 대하여 valid한 움직임 값을 얻어야한다.
     white_valid_move=[]
@@ -227,6 +256,9 @@ def gameover(State):
         print("BLACk PAWN HAVE NO CHOICE!")
         print("WHITE WIN!!!!!!!!!!!!!!!!")
         return 1
+    elif len(black_valid_move) == 0 and len(white_valid_move) ==0  :
+        DrawBoard(State)
+        print("DRAW!!!!!!!!!!!!!!!!")
 
     return 0
 
@@ -235,34 +267,41 @@ def gameover(State):
 
 ###### MAIN
 State = []
-file_input_name=input(f'Input file name (default board = 0) : ')
-user_color=input(f'Type "WHITE" or "BLACK": ')
-Turn=int(input(f'WHITE first (1) BLACK first (2): '))
-if user_color == "WHITE" :
-    user_color=whitePawn
-    computer_color = blackPawn
-elif user_color == "BLACK" :
-    user_color=blackPawn
-    computer_color = whitePawn
-if file_input_name == '0' :
-    while True: 
-        State = ['111','000','222']
-        if(Hexapawn_game(State,user_color,computer_color,Turn) == 1) :
-            quest=int(input(f'Would you play MORE(1) or End(2) : '))
-            if (quest == 1 ): ### 게임 재시작, input.txt 의 입력값이나 초기 상태부터 다시 시작.
-                continue
-            elif (quest == 2) :
-                print("GAME OVER")
-                break
-else : 
-    while True:
-        State = read_file(file_input_name)
-        if(Hexapawn_game(State,user_color,computer_color,Turn) == 1) :
-            quest=int(input(f'Would you play MORE(1) or End(2) : '))
-            if (quest == 1 ): ### 게임 재시작, input.txt 의 입력값이나 초기 상태부터 다시 시작.
-                continue
-            elif (quest == 2) :
-                print("GAME OVER")
-                break
+# file_input_name=input(f'Input file name (default board = 0) : ')
+# user_color=input(f'Type "WHITE" or "BLACK": ')
+# Turn=int(input(f'WHITE first (1) BLACK first (2): '))
+# if user_color == "WHITE" :
+#     user_color=whitePawn
+#     computer_color = blackPawn
+# elif user_color == "BLACK" :
+#     user_color=blackPawn
+#     computer_color = whitePawn
+file_input_name='0'
+user_color=whitePawn
+computer_color=blackPawn
+Turn=1
+State = ['111','000','222']
+State=Str_to_Pawn(State)
+AI_move(State,computer_color)
+# if file_input_name == '0' :
+#     while True: 
+#         State = ['111','000','222']
+#         if(Hexapawn_game(State,user_color,computer_color,Turn) == 1) :
+#             quest=int(input(f'Would you play MORE(1) or End(2) : '))
+#             if (quest == 1 ): ### 게임 재시작, input.txt 의 입력값이나 초기 상태부터 다시 시작.
+#                 continue
+#             elif (quest == 2) :
+#                 print("GAME OVER")
+#                 break
+# else : 
+#     while True:
+#         State = read_file(file_input_name)
+#         if(Hexapawn_game(State,user_color,computer_color,Turn) == 1) :
+#             quest=int(input(f'Would you play MORE(1) or End(2) : '))
+#             if (quest == 1 ): ### 게임 재시작, input.txt 의 입력값이나 초기 상태부터 다시 시작.
+#                 continue
+#             elif (quest == 2) :
+#                 print("GAME OVER")
+#                 break
 
 
